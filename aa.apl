@@ -15,8 +15,8 @@ ngrams←{
   max_ngrams{⍺≤≢⍵:⍺↑⍵⋄⍵}sorted_ngrams
 }
 
-⍝ create author models
-cm←{
+⍝ generate author models
+gm←{
   i←⊃⎕nget⍵
   ⎕←⍺ngrams i
 }
@@ -30,7 +30,7 @@ usage←{
 
 main←{
   5≠≢⍵:usage⍬
-  'm'=2⊃⍵:((⍎⍵⊃⍨⊢)¨3 4)cm 5⊃⍵
+  'm'=2⊃⍵:((⍎⍵⊃⍨⊢)¨3 4)gm 5⊃⍵
 }
 
 main 2⎕nq#'getcommandlineargs'
