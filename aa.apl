@@ -43,7 +43,7 @@ aa←{
     }¨model_files
     min_dist_id←(≢'models/')↓⊃model_files⌷⍨⊃⍋dists
     current_id←(≢'examples/')↓⍵
-    current_id min_dist_id (current_id=⍥⍎min_dist_id)
+    current_id(,⍥⊂,=⍥⍎)min_dist_id
   }¨example_files
   ⎕←'accuracy: ',(+/÷≢),1↑⍉⌽a
 }
