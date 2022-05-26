@@ -50,9 +50,11 @@ aa←{
 usage←{
   ⎕←'usage:',⎕ucs 10
   ⎕←'  aa.apl [option] [args]',⎕ucs 10
-  ⎕←'  options:'
-  ⎕←'    m [max_ngram_size] [max_ngrams] [filename]'
-  ⎕←'    a [max_ngram_size]'
+  ⎕←'  options:',⎕ucs 10
+  ⎕←'     generate author models:',⎕ucs 10
+  ⎕←'       m [max_ngram_size] [max_ngrams] [filename]',⎕ucs 10
+  ⎕←'     attribute authorship to each of the example files based on all of the models:',⎕ucs 10
+  ⎕←'       a [max_ngram_size]'
 }
 
 main←{
