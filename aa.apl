@@ -34,7 +34,7 @@ gm←{
 aa←{
   example_files←⎕sh'ls examples/*'
   model_files←⎕sh'ls models/*'
-  ⎕←↑⍵∘{
+  ⎕←'example_id' 'model_id' 'equal'⍪a←↑⍵∘{
     n←⍺0ngrams⊃⎕nget⍵
     dists←{
       m←⎕csv⍵
