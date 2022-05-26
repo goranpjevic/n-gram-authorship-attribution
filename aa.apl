@@ -45,6 +45,7 @@ aa←{
     current_id←(≢'examples/')↓⍵
     current_id min_dist_id (current_id=⍥⍎min_dist_id)
   }¨example_files
+  ⎕←'accuracy: ',(+/÷≢),1↑⍉⌽a
 }
 
 usage←{
