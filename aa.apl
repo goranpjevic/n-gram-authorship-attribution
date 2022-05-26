@@ -30,16 +30,35 @@ gm←{
   }¨uids
 }
 
+⍝ attribute authorship to each of the example files based on all of the models
+aa←{
+  example_files←⎕sh'ls examples/*'
+  model_files←⎕sh'ls models/*'
+  ⎕←↑⍵∘{
+    n←⍺0ngrams⊃⎕nget⍵
+    dists←{
+      m←⎕csv⍵
+      ⍝ calculate the distance between n and m
+      1
+    }¨model_files
+    min_dist_id←(≢'models/')↓⊃model_files⌷⍨⊃⍋dists
+    current_id←(≢'examples/')↓⍵
+    current_id min_dist_id (current_id=⍥⍎min_dist_id)
+  }¨example_files
+}
+
 usage←{
   ⎕←'usage:',⎕ucs 10
   ⎕←'  aa.apl [option] [args]',⎕ucs 10
   ⎕←'  options:'
   ⎕←'    m [max_ngram_size] [max_ngrams] [filename]'
+  ⎕←'    a [max_ngram_size]'
 }
 
 main←{
-  5≠≢⍵:usage⍬
-  'm'=2⊃⍵:((⍎⍵⊃⍨⊢)¨3 4)gm 5⊃⍵
+  (5=≢⍵)∧'m'=2⊃⍵:((⍎⍵⊃⍨⊢)¨3 4)gm 5⊃⍵
+  (3=≢⍵)∧'a'=2⊃⍵:aa⍎3⊃⍵
+  usage⍬
 }
 
 main 2⎕nq#'getcommandlineargs'
