@@ -17,6 +17,7 @@ ngrams←{
 
 ⍝ generate author models
 gm←{
+  mkdirsh←⎕sh'mkdir -p examples models'
   i←1↓⎕csv⍵
   ⍝ get all unique ids
   uids←∪,ids←⍎¨1↑⍉i
