@@ -17,8 +17,16 @@ ngrams←{
 
 ⍝ generate author models
 gm←{
-  i←⊃⎕nget⍵
-  ⎕←⍺ngrams i
+  i←1↓⎕csv⍵
+  ⍝ get all unique ids
+  uids←∪,ids←⍎¨1↑⍉i
+  ⍺∘{
+    content←⊃∘⌽¨(,ids=⍵)/↓i
+    example←1↑content
+    training_model←⊃,/content
+    example_out←example⎕nput('examples/',⍕⍵)1
+    model_out←(⍺ngrams training_model)(⎕csv⍠'IfExists' 'Replace')'models/',⍕⍵
+  }¨uids
 }
 
 usage←{
