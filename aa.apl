@@ -12,7 +12,7 @@ ngrams←{
   ⍝ sort all n-grams by their frequency
   sorted_ngrams←⍉↑((⊂⍒f)⌷⊢)¨(∪n)(f←(≢⊢)⌸n)
   ⍝ get max_ngrams n-grams
-  max_ngrams{⍺≤≢⍵:⍺↑⍵⋄⍵}sorted_ngrams
+  max_ngrams{(⍺=0)∨⍺>≢⍵:⍵⋄⍺↑⍵}sorted_ngrams
 }
 
 ⍝ generate author models
