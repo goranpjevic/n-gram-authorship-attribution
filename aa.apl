@@ -35,9 +35,9 @@ aa←{
   example_files←⎕sh'ls examples/*'
   model_files←⎕sh'ls models/*'
   ⎕←'example_id' 'model_id' 'equal'⍪a←↑⍵∘{
-    n←⍺0ngrams⊃⎕nget⍵
+    example_ngrams example_frequencies←↓⍉⍺0ngrams⊃⎕nget⍵
     dists←{
-      m←⎕csv⍵
+      model_ngrams model_frequencies←↓⍉⎕csv⍵
       ⍝ calculate the distance between n and m
       1
     }¨model_files
