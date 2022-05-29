@@ -33,7 +33,6 @@ aa←{
     dists←{
       model_ngrams model_frequencies←↓⍉⎕csv⍵
       ⍝ calculate the distance between n and m
-      ⍝example_ngrams example_frequencies eq1 model_ngrams(⍎¨model_frequencies)
       model_frequencies←⍎¨model_frequencies
       all_ex_f←(example_frequencies,0)[example_ngrams⍳∪example_ngrams,model_ngrams]
       all_mo_f←(model_frequencies,0)[model_ngrams⍳∪example_ngrams,model_ngrams]
