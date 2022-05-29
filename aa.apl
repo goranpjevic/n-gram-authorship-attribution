@@ -10,7 +10,7 @@ ngrams←{
   ⍝ get n-grams of all words of sizes 1 to 10
   n←~∘' '¨~∘' '⊃,/,w∘.ng⍳max_ngram_size
   ⍝ sort all n-grams by their frequency
-  sorted_ngrams←⍉↑((⊂⍒f)⌷⊢)¨(∪n)(f←(≢⊢)⌸n)
+  sorted_ngrams←⍉↑((⊂⍒f)⌷⊢)¨(∪n)(15⍕¨f←{⍵÷⍥≢n}⌸n)
   ⍝ get max_ngrams n-grams
   max_ngrams{(⍺=0)∨⍺>≢⍵:⍵⋄⍺↑⍵}sorted_ngrams
 }
@@ -34,6 +34,7 @@ aa←{
       model_ngrams model_frequencies←↓⍉⎕csv⍵
       ⍝ calculate the distance between n and m
       model_frequencies←⍎¨model_frequencies
+      example_frequencies←⍎¨example_frequencies
       all_ngrams←∪example_ngrams,model_ngrams
       all_ex_f←(example_frequencies,0)[example_ngrams⍳all_ngrams]
       all_mo_f←(model_frequencies,0)[model_ngrams⍳all_ngrams]
