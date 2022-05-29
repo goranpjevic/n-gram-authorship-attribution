@@ -40,7 +40,11 @@ aa←{
     dists←{
       model_ngrams model_frequencies←↓⍉⎕csv⍵
       ⍝ calculate the distance between n and m
-      1
+      ⍝example_ngrams example_frequencies eq1 model_ngrams(⍎¨model_frequencies)
+      model_frequencies←⍎¨model_frequencies
+      all_ex_f←(example_frequencies,0)[example_ngrams⍳∪example_ngrams,model_ngrams]
+      all_mo_f←(model_frequencies,0)[model_ngrams⍳∪example_ngrams,model_ngrams]
+      all_ex_f eq1 all_mo_f
     }¨model_files
     min_dist_id←(≢'models/')↓⊃model_files⌷⍨⊃⍋dists
     current_id←(≢'examples/')↓⍵
@@ -48,6 +52,8 @@ aa←{
   }¨example_files
   ⎕←'accuracy: ',(+/÷≢),1↑⍉⌽a
 }
+
+eq1←(+/2*⍨2×-÷+)
 
 usage←{
   ⎕←'usage:',⎕ucs 10
