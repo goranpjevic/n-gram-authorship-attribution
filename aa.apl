@@ -18,17 +18,10 @@ ngrams←{
 ⍝ generate author models
 gm←{
   mkdirsh←⎕sh'mkdir -p examples models'
-  i←1↓⎕csv⍵
-  ⍝ get all unique ids
-  uids←∪,ids←⍎¨1↑⍉i
-  ⍺∘{
-    content←⊃∘⌽¨(,ids=⍵)/↓i
-    example←1↑content
-    training_model←⊃,/1↓content
-    0=≢training_model:⍬
-    example_out←example⎕nput('examples/',⍕⍵)1
-    model_out←(⍺ngrams training_model)(⎕csv⍠'IfExists' 'Replace')'models/',⍕⍵
-  }¨uids
+  model_files←⎕sh'ls all/*'
+  ⍵∘{
+    (⍺ngrams⊃⎕nget⍵)(⎕csv⍠'IfExists' 'Replace')'models/',(≢'all/')↓⍵
+  }¨model_files
 }
 
 ⍝ attribute authorship to each of the example files based on all of the models
@@ -67,7 +60,7 @@ usage←{
 
 main←{
   1=≢⍵:usage⍬
-  (5=≢⍵)∧'m'=2⊃⍵:((⍎⍵⊃⍨⊢)¨3 4)gm 5⊃⍵
+  (4=≢⍵)∧'m'=2⊃⍵:gm(⍎⍵⊃⍨⊢)¨3 4
   (3=≢⍵)∧'a'=2⊃⍵:aa⍎3⊃⍵
   usage⍬
 }
