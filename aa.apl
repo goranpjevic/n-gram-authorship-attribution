@@ -34,8 +34,9 @@ aa←{
       model_ngrams model_frequencies←↓⍉⎕csv⍵
       ⍝ calculate the distance between n and m
       model_frequencies←⍎¨model_frequencies
-      all_ex_f←(example_frequencies,0)[example_ngrams⍳∪example_ngrams,model_ngrams]
-      all_mo_f←(model_frequencies,0)[model_ngrams⍳∪example_ngrams,model_ngrams]
+      all_ngrams←∪example_ngrams,model_ngrams
+      all_ex_f←(example_frequencies,0)[example_ngrams⍳all_ngrams]
+      all_mo_f←(model_frequencies,0)[model_ngrams⍳all_ngrams]
       all_ex_f eq1 all_mo_f
     }¨model_files
     min_dist_id←(≢'models/')↓⊃model_files⌷⍨⊃⍋dists
