@@ -1,6 +1,6 @@
 #!/usr/bin/env dyalogscript
 
-⍝ get 1 to 10 character n-grams
+⍝ get 1 to 'max_ngram_size' character n-grams
 ngrams←{
   max_ngram_size max_ngrams←⍺
   ⍝ partition input into strings of letters
