@@ -7,7 +7,7 @@ ngrams←{
   w←⍵⊆⍨⊃∨/(⍵=⍥⎕c⊢)¨⎕a
   ⍝ get n-grams of a word
   ng←(⊢,/(' '⍴⍨¯1+⊢),⍨' ',⊣)
-  ⍝ get n-grams of all words of sizes 1 to 10
+  ⍝ get n-grams of all words of sizes 1 to 'max_ngram_size'
   n←~∘' '¨~∘' '⊃,/,w∘.ng⍳max_ngram_size
   ⍝ sort all n-grams by their frequency
   sorted_ngrams←⍉↑((⊂⍒f)⌷⊢)¨(∪n)(15⍕¨f←{⍵÷⍥≢n}⌸n)
