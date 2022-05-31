@@ -28,6 +28,7 @@ gm←{
 aa←{
   example_files←⎕sh'ls examples/*'
   model_files←⎕sh'ls models/*'
+  eq←⍎⊃'eq1' 'eq2' 'eq3'[⍎⍺]
   ⎕←'example_id' 'model_id' 'equal'⍪a←↑⍵∘{
     example_ngrams example_frequencies←↓⍉⍺0ngrams⊃⎕nget⍵
     example_frequencies←⍎¨example_frequencies
@@ -38,7 +39,7 @@ aa←{
       all_ngrams←∪example_ngrams,model_ngrams
       all_ex_f←(example_frequencies,0)[example_ngrams⍳all_ngrams]
       all_mo_f←(model_frequencies,0)[model_ngrams⍳all_ngrams]
-      all_ex_f eq1 all_mo_f
+      all_ex_f eq all_mo_f
     }¨model_files
     min_dist_id←(≢'models/')↓⊃model_files⌷⍨⊃⍋dists
     current_id←(≢'examples/')↓⍵
@@ -47,7 +48,10 @@ aa←{
   ⎕←'accuracy: ',(+/÷≢),1↑⍉⌽a
 }
 
-eq1←+/2*⍨2×-÷+
+⍝ distance equations
+eq1←+/2*⍨-
+eq2←+/2*⍨2×-÷+
+eq3←+/|⍤-
 
 usage←{
   ⎕←'usage:',⎕ucs 10
@@ -56,13 +60,13 @@ usage←{
   ⎕←'     generate author models:',⎕ucs 10
   ⎕←'       m [max_ngram_size] [max_ngrams] [filename]',⎕ucs 10
   ⎕←'     attribute authorship to each of the example files based on all of the models:',⎕ucs 10
-  ⎕←'       a [max_ngram_size]'
+  ⎕←'       a [max_ngram_size] [equation_id]'
 }
 
 main←{
   1=≢⍵:usage⍬
   (4=≢⍵)∧'m'=2⊃⍵:gm(⍎⍵⊃⍨⊢)¨3 4
-  (3=≢⍵)∧'a'=2⊃⍵:aa⍎3⊃⍵
+  (4=≢⍵)∧'a'=2⊃⍵:(4⊃⍵)aa⍎3⊃⍵
   usage⍬
 }
 
