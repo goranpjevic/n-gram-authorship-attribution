@@ -17,18 +17,21 @@ ngrams←{
 
 ⍝ generate author models
 gm←{
-  mkdirsh←⎕sh'mkdir -p examples models'
-  model_files←⎕sh'ls all/*'
+  corpus_dir models_dir←⍺
+  mkdirsh←⎕sh'mkdir -p ',models_dir
+  model_files←⎕sh'ls ',corpus_dir,'/*'
   ⍵∘{
-    (⍺ngrams⊃⎕nget⍵)(⎕csv⍠'IfExists' 'Replace')'models/',(≢'all/')↓⍵
+    (⍺ngrams⊃⎕nget⍵)(⎕csv⍠'IfExists' 'Replace')models_dir,'/',(1+≢corpus_dir)↓⍵
   }¨model_files
 }
 
 ⍝ attribute authorship to each of the example files based on all of the models
 aa←{
-  example_files←⎕sh'ls examples/*'
-  model_files←⎕sh'ls models/*'
-  eq←⍎⊃'eq1' 'eq2' 'eq3'[⍎⍺]
+  eq_id examples_dir models_dir←⍺
+  mkdirsh←⎕sh'mkdir -p ',examples_dir
+  example_files←⎕sh'ls ',examples_dir,'/*'
+  model_files←⎕sh'ls ',models_dir,'/*'
+  eq←⍎⊃'eq1' 'eq2' 'eq3'[⍎eq_id]
   ⎕←'example_id' 'model_id' 'equal'⍪a←↑⍵∘{
     example_ngrams example_frequencies←↓⍉⍺0ngrams⊃⎕nget⍵
     example_frequencies←⍎¨example_frequencies
@@ -41,8 +44,8 @@ aa←{
       all_mo_f←(model_frequencies,0)[model_ngrams⍳all_ngrams]
       all_ex_f eq all_mo_f
     }¨model_files
-    min_dist_id←(≢'models/')↓⊃model_files⌷⍨⊃⍋dists
-    current_id←(≢'examples/')↓⍵
+    min_dist_id←(1+≢models_dir)↓⊃model_files⌷⍨⊃⍋dists
+    current_id←(1+≢examples_dir)↓⍵
     current_id(,⍥⊂,≡)min_dist_id
   }¨example_files
   ⎕←'accuracy: ',(+/÷≢),1↑⍉⌽a
@@ -58,15 +61,15 @@ usage←{
   ⎕←'  aa.apl [option] [args]',⎕ucs 10
   ⎕←'  options:',⎕ucs 10
   ⎕←'     generate author models:',⎕ucs 10
-  ⎕←'       m [max_ngram_size] [max_ngrams] [filename]',⎕ucs 10
+  ⎕←'       m [max_ngram_size] [max_ngrams] [corpus_dir] [models_dir]',⎕ucs 10
   ⎕←'     attribute authorship to each of the example files based on all of the models:',⎕ucs 10
-  ⎕←'       a [max_ngram_size] [equation_id]'
+  ⎕←'       a [max_ngram_size] [equation_id] [examples_dir] [models_dir]'
 }
 
 main←{
   1=≢⍵:usage⍬
-  (4=≢⍵)∧'m'=2⊃⍵:gm(⍎⍵⊃⍨⊢)¨3 4
-  (4=≢⍵)∧'a'=2⊃⍵:(4⊃⍵)aa⍎3⊃⍵
+  (6=≢⍵)∧'m'=2⊃⍵:(4↓⍵)gm(⍎⍵⊃⍨⊢)¨3 4
+  (6=≢⍵)∧'a'=2⊃⍵:(4↓⍵)aa⍎3⊃⍵
   usage⍬
 }
 
