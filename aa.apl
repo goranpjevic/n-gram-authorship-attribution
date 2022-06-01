@@ -28,7 +28,6 @@ gm←{
 ⍝ attribute authorship to each of the example files based on all of the models
 aa←{
   eq_id examples_dir models_dir←⍺
-  mkdirsh←⎕sh'mkdir -p ',examples_dir
   example_files←⎕sh'ls ',examples_dir,'/*'
   model_files←⎕sh'ls ',models_dir,'/*'
   eq←⍎⊃'eq1' 'eq2' 'eq3'[⍎eq_id]
