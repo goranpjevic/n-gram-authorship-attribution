@@ -1,3 +1,17 @@
                          n-gram-authorship-attribution
 
 n-gram based authoriship attribution of text.
+
+usage:
+
+  aa.apl [option] [args]
+
+options:
+
+   generate author models:
+
+     m [max_ngram_size] [max_ngrams] [corpus_dir] [models_dir]
+
+   attribute authorship to each of the example files based on all of the models:
+
+     a [max_ngram_size] [equation_id] [examples_dir] [models_dir]
